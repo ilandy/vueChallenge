@@ -1,34 +1,38 @@
 <template>
   <div id="nav">
     <router-link to="/" @click="isMapMode = !isMapMode"  :class="{ 'active': !isMapMode }" >清單版</router-link>
-    <router-link to="/about" @click="isMapMode = !isMapMode" :class="{ 'active': isMapMode }" >地圖版</router-link>
+    <router-link to="/map" @click="isMapMode = !isMapMode" :class="{ 'active': isMapMode }" >地圖版</router-link>
   </div>
-  <router-view/>
+  <section class="content">
+    <Search></Search>
+      <router-view/>
+  </section>
+  
   <!-- TODO: 
-  1. 建立 fetch 抓取 ubike API
-  2. 將資料轉換
-  3. 新增尋關鍵字功能
-  4. 新增排序功能
-  5. 新增頁碼
-  6. 分離為 components (透過 porps 傳遞資料)
-  7. 將 props 改寫為 Vuex
-  8. 新增 leaf map 功能
   9. 將 Vuex 改為 composition API 寫法
   -->
 
 </template>
 <script>
+import store from '@/store/index.js'
+import Search from '@/components/Search.vue'
 export default {
+  components: {
+    Search
+  },
   data(){
     return {
       isMapMode: false
     }
-  }
+  },
+  created() {
+        store.dispatch('fetchData')
+    }
 }
 
 </script>
 <style lang="scss">
-$color: #42b983;
+@import "@/assets/scss/variable.scss";
 body {
   background-color: #f1f1f1;
   padding: 0;
@@ -40,7 +44,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
-
+.content {
+  width: 95%;
+  margin: auto;
+}
 #nav {
   padding: 30px 30px 15px;
   box-shadow: 0 -1px 0 rgba(0,0,0,.05) inset;

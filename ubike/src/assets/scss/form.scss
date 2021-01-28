@@ -1,0 +1,14 @@
+.input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    width: 200px;
+    &:focus {
+        border-color: $color;
+        outline: none;
+    }
+    &.input-min {
+        width: 2.5em;
+        padding: 5px;
+        text-align: center;
+    }
+}
